@@ -1,34 +1,36 @@
 # Cryptography-CP-ABE
-## Giới thiệu: ENCRYPTION, ACCESS CONTROL AND QUERY ON CLOUD DATABASE IN REAL ESTATE TRANSACTIONS 
+## Introduction: ENCRYPTION, ACCESS CONTROL AND QUERY ON CLOUD DATABASE IN REAL ESTATE TRANSACTIONS 
 
-### Ngữ cảnh vấn đề : 
-* Các công ty bất động sản cần lưu trữ và quản lý tài liệu liên quan đến giao dịch, hợp đồng và hồ sơ pháp lý.
-* Dữ liệu được lưu trữ trên Cloud và cần đảm bảo bảo mật khi truy cập từ nhiều bên (nhân viên công ty, ngân hàng, cơ quan hành chính công, v.v.).
-* Vấn đề đặt ra là làm sao kiểm soát quyền truy cập để chỉ những người có thẩm quyền mới có thể đọc hoặc sửa dữ liệu.
+Ciphertext-Policy Attribute-Based Encryption (CP-ABE) is a sophisticated encryption method that enables data access based on user attributes. The ciphertext is embedded with a special policy, allowing only users with attributes that match the policy to decrypt it. This approach enhances flexibility and fine-grained access control, particularly in environments like cloud storage where data might need to be shared selectively.
 
+This project is applied in the real estate field, utilizing two CP-ABE schemas, SP21 and BSW07, for policy encryption. The relevant external parties include customers, government employees, banks, and company employees. Currently, the project has achieved confidentiality in terms of security goals but lacks authentication and authorization mechanisms.
+### Problem Context:
+* Real estate companies need to store and manage documents related to transactions, contracts, and legal records.
+* Data is stored on the cloud and must be securely accessed by multiple parties (company employees, banks, public administration agencies, etc.).
+* The challenge is how to enforce access control so that only authorized individuals can read or modify the data.
 ![Image](https://github.com/user-attachments/assets/919df18e-8efe-49fe-ba64-7516fce4c978)
 
-### Các bên liên quan và mối đe dọa
-* Data Owners: Người sở hữu và quản lý dữ liệu.
-* Data Users: Những người được cấp quyền truy cập vào dữ liệu (nhân viên, ngân hàng, cơ quan hành chính công).
-* Cloud Storage: Nơi lưu trữ dữ liệu nhưng chỉ đóng vai trò trung gian, không được phép đọc nội dung.
-* Mối đe dọa:
-  - Bên thứ ba bán tín nhiệm (semi-trusted): Cloud có thể truy cập dữ liệu.
-  - Kẻ giả mạo: Giả danh người có quyền để truy cập dữ liệu trái phép.
+### Stakeholders and Threats
+* Data Owners: Individuals or entities that own and manage the data.
+* Data Users: Authorized individuals who have access to the data (employees, banks, public administration agencies).
+* Cloud Storage: The platform where data is stored, acting only as an intermediary without permission to read the content.
+* Threats:
+  - Semi-trusted third party: The cloud provider may have access to the data.
+  - Impersonators: Attackers who disguise themselves as authorized users to gain unauthorized access to the data.
 
  ![Image](https://github.com/user-attachments/assets/c3c3d8f8-2ee5-411d-98a2-db105c5deccd)
 
- ### Giải pháp bảo mật
-* Xác thực & cấp quyền (Authentication & Authorization): Đảm bảo chỉ người có quyền mới truy cập được hệ thống.
-* Bảo mật dữ liệu (Confidentiality):
-  * Mã hóa đối xứng AES: Đảm bảo dữ liệu trên Cloud không bị đọc bởi bên thứ ba.
-  * Mã hóa CP-ABE (Ciphertext Policy Attribute-Based Encryption): Chỉ những người có thuộc tính phù hợp mới có thể giải mã dữ liệu.
-  * Trao đổi khóa Diffie-Hellman: Tạo khóa bí mật động để bảo vệ thông tin truy vấn và dữ liệu.
+ ### Security Solutions
+* Authentication & Authorization: Ensures that only authorized users can access the system.
+* Data Confidentiality:
+  * AES Symmetric Encryption: Ensures that data stored on the cloud cannot be read by third parties.
+  * CP-ABE (Ciphertext Policy Attribute-Based Encryption): Allows only users with matching attributes to decrypt the data.
+  * Diffie-Hellman Key Exchange: Dynamically generates secret keys to protect query information and data.
  
 ![Image](https://github.com/user-attachments/assets/91724e99-09f0-45e6-936a-92083907d854)
 ![Image](https://github.com/user-attachments/assets/7da71bfa-1712-490c-81ba-15241bdffdc4)
 
-### Triển khai và đánh giá
-* Hệ thống được thử nghiệm trên môi trường Linux với các node giả lập (server ngân hàng, người dùng có quyền khác nhau).
-* Các bước thử nghiệm gồm: tạo khóa, mã hóa dữ liệu, lưu trữ lên Cloud, kiểm soát truy vấn, giải mã dựa trên chính sách.
-* Hệ thống hoạt động hiệu quả trong kiểm soát truy cập, nhưng chưa có xác thực từ phía server để đảm bảo người dùng không truy cập nhầm máy chủ.
+### Implementation and Evaluation
+* The system is tested in a Linux environment with simulated nodes (bank server, users with different access rights).
+* Testing steps include key generation, data encryption, cloud storage, query control, and decryption based on policies.
+* The system effectively enforces access control, but it lacks server-side authentication to ensure users do not mistakenly access the wrong server.
